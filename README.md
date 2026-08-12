@@ -1,3 +1,3 @@
 # NeoJolly
 
-Things world sharing🐰
+NeoJolly webiste site for connecting and sharing.🐰
