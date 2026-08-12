@@ -1,16 +1,361 @@
-<h1>NeoJolly</h1>
-<p>Things worth sharing 🐰</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeoJolly | Portfolio</title>
+  <style>
+    /* --- CSS RESET & VARIABLES --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<h2>VR Paintings</h2>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --nav-bg: rgba(15, 23, 42, 0.85);
+    }
 
-<div style="width: 1280px; height: 720px; overflow: hidden;">
-  <img src="showtime/paintings/1.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-</div>
+    /* Enables smooth scrolling when clicking nav links */
+    html {
+      scroll-behavior: smooth;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+    }
 
-<div style="width: 1280px; height: 720px; overflow: hidden;">
-  <img src="showtime/paintings/2.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-</div>
+    /* --- STICKY NAVIGATION BAR --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-<div style="width: 1280px; height: 720px; overflow: hidden;">
-  <img src="showtime/paintings/3.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-</div>
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* --- SECTIONS LAYOUT --- */
+    section {
+      min-height: auto;
+      padding: 6rem 2rem 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+      color: var(--accent);
+      border-bottom: 2px solid rgba(56, 189, 248, 0.2);
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      max-width: 100%;
+    }
+
+    /* --- HERO BUTTONS --- */
+    .cta-buttons {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .btn:hover {
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: #0f172a;
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--text-muted);
+      color: var(--text-main);
+    }
+
+    /* --- PROJECT GRID --- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* --- HERO SECTION SETUP --- */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      /* Dark gradient overlay + background image */
+      background: 
+        linear-gradient(rgba(15, 23, 42, 0.25), rgba(15, 23, 42, 1.00)),
+        url('assets/hero-bg-b.png') no-repeat center center / cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 7rem 2rem 4rem 2rem;
+      max-width: 100%; /* Spans full width for background image */
+      min-height: 100vh; /* Takes full viewport height */
+    }
+
+    .hero-content {
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* --- PROFILE AVATAR --- */
+    .profile-avatar {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%; /* Fully circular */
+      border: 4px solid #ffffff; /* 4px solid white border */
+      object-fit: cover;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Subtle drop shadow */
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-avatar:hover {
+      transform: scale(1.03); /* Soft hover effect */
+    }
+
+    /* Align CTA buttons centrally in hero */
+    #hero .cta-buttons {
+      justify-content: center;
+    }
+
+    /* --- CARD --- */    
+    .card {
+      background-color: var(--card-bg);
+      padding: 1.8rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .card:hover {
+    }
+
+    .card h3 {
+      margin-bottom: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 200px; /* Fixed height for consistent card sizes */
+      object-fit: cover; /* Prevents image stretching/distortion */
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .card-aspect-img {
+      width: 100%;
+      height: auto;
+      object-fit: cover; /* Prevents image stretching/distortion */
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.9rem;
+    }
+
+    /* --- RESPONSIVE DESIGN --- */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      nav { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header>
+    <nav>
+      <a href="#hero" class="logo">🐰NeoJolly</a>
+      <ul class="nav-links">
+        <li><a href="#news">New</a></li>
+        <!-- <li><a href="#paintings">Paintings</a></li> -->
+        <!-- <li><a href="#worlds">Worlds</a></li>
+        <li><a href="#avatars">Avatars</a></li>
+        <li><a href="#assets">Assets</a></li> -->
+        <li><a href="#connect">Connect</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Section : Hero -->
+  <section id="hero">
+    <div class="hero-content">
+      
+      <!-- Profile Image with 4px white border -->
+      <img src="assets/profile.png" alt="Profile Picture" class="profile-avatar">
+      
+      <h1>Hi, I'm <span style="color: var(--accent);">NeoJolly</span>.</h1>
+      <p>VR Painter, World builder, Avatar maker, Video producer, Youtuber, 3D Creator, Software Developer, and Dreamer building interactive digital experiences and virtual environments. </p>
+      <p>Truth is I am a passionate learner and a beginner at so many things.</p>
+      <p>Generalist at heart. Spread so thin I become transparent.🐰</p>
+      
+      <div class="cta-buttons">
+        <a href="#news" class="btn btn-primary">What's New</a>
+        <!-- <a href="#paintings" class="btn btn-primary">View My Work</a> -->
+        <a href="#connect" class="btn btn-secondary">Get Connected</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Section : News -->
+  <section id="news">
+    <h2>What's New</h2>
+    <div class="column">
+      
+      <div class="card">
+        <h2>Hawk</h2>
+        <img src="assets/VRChat_2026-08-02_22-32-33.189_3840x2160.png" alt="Hawk" class="card-aspect-img">
+        <p>My VR painting of an awesome Hawk. This was the second painting I created in my "daPens" world. Inspired by photo from Oliver Wagenblatt</p>
+        <p>🏦Journal 🐰 📅Aug 2, 2026</p>
+        <p>🏷️VRChat 🏷️Painting 🏷️Prompt:Bird 🏷️daPens</p>
+        <a href="https://vrchat.com/home/world/wrld_236080a7-f6c6-4fb9-94d4-9c7fc2614549/info" target="_blank" class="btn btn-secondary">🌐VRChat World</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section : Paintings -->
+  <!-- <section id="paintings">
+    <h2>Featured VR Painting</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Painting One</h3>
+        <img src="showtime/paintings/1.jpg" alt="Painting 1 Preview" class="card-img">
+              </div>
+      <div class="card">
+        <h3>Painting Two</h3>
+        <img src="showtime/paintings/2.jpg" alt="Painting 2 Preview" class="card-img">
+              </div>
+      <div class="card">
+        <h3>Painting Three</h3>
+        <img src="showtime/paintings/3.jpg" alt="Painting 3 Preview" class="card-img">
+      </div>
+            <div class="card">
+        <h3>Painting Three</h3>
+        <img src="showtime/paintings/3.jpg" alt="Painting 3 Preview" class="card-img">
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Section : Worlds -->
+  <!-- <section id="worlds">
+    <h2>Worlds</h2>
+    <p>🐰</p>
+  </section> -->
+
+  <!-- Section : Avatars -->
+  <!-- <section id="avatars">
+    <h2>Avatars</h2>
+    <p>🐰</p>
+  </section> -->
+
+<!-- Section : Assets -->
+  <!-- <section id="assets">
+    <h2>Assets</h2>
+    <p>🐰</p>
+  </section> -->
+
+  <!-- Section : Contact -->
+  <section id="connect">
+    <h2>Let's Connect</h2>
+    <div class="cta-buttons" style="margin-top: 1.5rem;">
+      <a href="https://x.com/neojolly_vr" target="_blank" class="btn btn-secondary">X</a>
+      <a href="https://www.youtube.com/@NeoJolly_vr" target="_blank" class="btn btn-secondary">YouTube</a>
+      <a href="https://vrchat.com/home/user/usr_553d807a-4c2a-4068-8e42-210649395de5" target="_blank" class="btn btn-secondary">VRChat</a>
+      <a href="https://github.com/neojolly" target="_blank" class="btn btn-secondary">GitHub</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 🐰NeoJolly. Hosted on GitHub Pages.</p>
+  </footer>
+
+</body>
+</html>
